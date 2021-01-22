@@ -1,0 +1,19 @@
+name: Setup build matrix
+description: Setup a more complex build matrix for GitHub Actions
+author: jgiannuzzi
+branding:
+  icon: grid
+  color: purple
+
+inputs:
+  config:
+    description: Build matrix configuration
+    required: true
+
+outputs:
+  matrix:
+    description: A build matrix to use in your jobs
+
+runs:
+  using: docker
+  image: docker://ghcr.io/jgiannuzzi/setup-build-matrix:v1.0.0
