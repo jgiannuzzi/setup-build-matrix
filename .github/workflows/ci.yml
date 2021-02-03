@@ -3,18 +3,12 @@ name: CI
 on:
   push:
 
-env:
-  IMAGE: ghcr.io/jgiannuzzi/setup-build-matrix
-  TAG: v1.0.0
-
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Build Docker image
-        run: docker build -t $IMAGE:$TAG .
       - name: Test action
         uses: ./
         id: test
@@ -39,8 +33,3 @@ jobs:
       - name: Verify output
         run: |
           [ '${{ steps.test.outputs.matrix }}' == '{"include":[{"os":"ubuntu-latest","component":"backend","dotnet":"3.1.405"},{"os":"ubuntu-latest","component":"backend","dotnet":"5.0.102"},{"os":"ubuntu-latest","component":"ui","dotnet":"3.1.405","node":"14.15.4"},{"os":"ubuntu-latest","component":"ui","dotnet":"3.1.405","node":"15.6.0"},{"os":"ubuntu-latest","component":"ui","dotnet":"5.0.102","node":"14.15.4"},{"os":"ubuntu-latest","component":"ui","dotnet":"5.0.102","node":"15.6.0"},{"os":"windows-latest","component":"backend","dotnet":"3.1.405"},{"os":"windows-latest","component":"backend","dotnet":"5.0.102"},{"os":"windows-latest","component":"ui","dotnet":"3.1.405","node":"14.15.4"},{"os":"windows-latest","component":"ui","dotnet":"3.1.405","node":"15.6.0"},{"os":"windows-latest","component":"ui","dotnet":"4.7.2","node":"14.15.4"},{"os":"windows-latest","component":"ui","dotnet":"4.7.2","node":"15.6.0"},{"os":"windows-latest","component":"ui","dotnet":"5.0.102","node":"14.15.4"},{"os":"windows-latest","component":"ui","dotnet":"5.0.102","node":"15.6.0"}]}' ]
-      - name: Push Docker image
-        if: github.ref == format('refs/tags/{0}', env.TAG)
-        run: |
-          echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-          docker push $IMAGE:$TAG

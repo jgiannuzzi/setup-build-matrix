@@ -15,5 +15,5 @@ outputs:
     description: A build matrix to use in your jobs
 
 runs:
-  using: docker
-  image: docker://ghcr.io/jgiannuzzi/setup-build-matrix:v1.0.0
+  using: node12
+  main: dist/index.js

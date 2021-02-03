@@ -1,0 +1,39 @@
+{
+  "name": "setup-build-matrix",
+  "version": "1.0.0",
+  "description": "This action helps build more complex GitHub Actions build matrices.",
+  "main": "lib/main.js",
+  "scripts": {
+    "build": "ncc build --license licenses.txt",
+    "format": "prettier --write lib/**/*.js",
+    "format-check": "prettier --check lib/**/*.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pre-checkin": "yarn run format && yarn run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jgiannuzzi/setup-build-matrix.git"
+  },
+  "keywords": [
+    "actions",
+    "build",
+    "matrix"
+  ],
+  "author": "Jonathan Giannuzzi",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/jgiannuzzi/setup-build-matrix/issues"
+  },
+  "homepage": "https://github.com/jgiannuzzi/setup-build-matrix#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "babel-runtime": "^6.26.0",
+    "fast-cartesian": "^5.1.0",
+    "js-yaml": "^4.0.0",
+    "pandas-js": "^0.2.4"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.27.0",
+    "prettier": "^2.2.1"
+  }
+}
