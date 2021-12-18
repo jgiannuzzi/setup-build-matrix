@@ -19,6 +19,11 @@ jobs:
               component: [backend, ui]
               dotnet: [3.1.405, 5.0.102]
             operations:
+              - type: append
+                matrix:
+                  os: [macos-latest]
+                  component: [backend,ui]
+                  dotnet: [4.7.2,5.0.102]
               - type: merge
                 match: [component]
                 matrix:
@@ -32,4 +37,5 @@ jobs:
                   dotnet: [4.7.2]
       - name: Verify output
         run: |
-          [ '${{ steps.test.outputs.matrix }}' == '{"include":[{"os":"ubuntu-latest","component":"backend","dotnet":"3.1.405"},{"os":"ubuntu-latest","component":"backend","dotnet":"5.0.102"},{"os":"ubuntu-latest","component":"ui","dotnet":"3.1.405","node":"14.15.4"},{"os":"ubuntu-latest","component":"ui","dotnet":"3.1.405","node":"15.6.0"},{"os":"ubuntu-latest","component":"ui","dotnet":"5.0.102","node":"14.15.4"},{"os":"ubuntu-latest","component":"ui","dotnet":"5.0.102","node":"15.6.0"},{"os":"windows-latest","component":"backend","dotnet":"3.1.405"},{"os":"windows-latest","component":"backend","dotnet":"5.0.102"},{"os":"windows-latest","component":"ui","dotnet":"3.1.405","node":"14.15.4"},{"os":"windows-latest","component":"ui","dotnet":"3.1.405","node":"15.6.0"},{"os":"windows-latest","component":"ui","dotnet":"4.7.2","node":"14.15.4"},{"os":"windows-latest","component":"ui","dotnet":"4.7.2","node":"15.6.0"},{"os":"windows-latest","component":"ui","dotnet":"5.0.102","node":"14.15.4"},{"os":"windows-latest","component":"ui","dotnet":"5.0.102","node":"15.6.0"}]}' ]
+          echo ${{ steps.test.outputs.matrix }}
+          [ '${{ steps.test.outputs.matrix }}' == '{"include":[{"os":"macos-latest","component":"backend","dotnet":"4.7.2"},{"os":"macos-latest","component":"backend","dotnet":"5.0.102"},{"os":"macos-latest","component":"ui","dotnet":"4.7.2","node":"14.15.4"},{"os":"macos-latest","component":"ui","dotnet":"4.7.2","node":"15.6.0"},{"os":"macos-latest","component":"ui","dotnet":"5.0.102","node":"14.15.4"},{"os":"macos-latest","component":"ui","dotnet":"5.0.102","node":"15.6.0"},{"os":"ubuntu-latest","component":"backend","dotnet":"3.1.405"},{"os":"ubuntu-latest","component":"backend","dotnet":"5.0.102"},{"os":"ubuntu-latest","component":"ui","dotnet":"3.1.405","node":"14.15.4"},{"os":"ubuntu-latest","component":"ui","dotnet":"3.1.405","node":"15.6.0"},{"os":"ubuntu-latest","component":"ui","dotnet":"5.0.102","node":"14.15.4"},{"os":"ubuntu-latest","component":"ui","dotnet":"5.0.102","node":"15.6.0"},{"os":"windows-latest","component":"backend","dotnet":"3.1.405"},{"os":"windows-latest","component":"backend","dotnet":"5.0.102"},{"os":"windows-latest","component":"ui","dotnet":"3.1.405","node":"14.15.4"},{"os":"windows-latest","component":"ui","dotnet":"3.1.405","node":"15.6.0"},{"os":"windows-latest","component":"ui","dotnet":"4.7.2","node":"14.15.4"},{"os":"windows-latest","component":"ui","dotnet":"4.7.2","node":"15.6.0"},{"os":"windows-latest","component":"ui","dotnet":"5.0.102","node":"14.15.4"},{"os":"windows-latest","component":"ui","dotnet":"5.0.102","node":"15.6.0"}]}' ]
