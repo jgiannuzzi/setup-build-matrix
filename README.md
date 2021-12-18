@@ -34,6 +34,12 @@ jobs:
               component: [backend, ui]
               dotnet: [3.1.405, 5.0.102]
             operations:
+              # Append a new matrix to the base matrix
+              - type: append
+                matrix:
+                  os: [macos-latest]
+                  component: [backend,ui]
+                  dotnet: [4.7.2,5.0.102]
               # Do a database-style outer join to merge the 2 node versions
               # on matching component==ui keys.
               - type: merge
@@ -68,6 +74,28 @@ jobs:
     strategy:
       matrix:
         include:
+          - os: macos-latest
+            component: backend
+            dotnet: 4.7.2
+          - os: macos-latest
+            component: backend
+            dotnet: 5.0.102
+          - os: macos-latest
+            component: ui
+            dotnet: 4.7.2
+            node: 14.15.4
+          - os: macos-latest
+            component: ui
+            dotnet: 4.7.2
+            node: 15.6.0
+          - os: macos-latest
+            component: ui
+            dotnet: 5.0.102
+            node: 14.15.4
+          - os: macos-latest
+            component:  ui
+            dotnet: 5.0.102
+            node: 15.6.0
           - os: ubuntu-latest
             component: backend
             dotnet: 3.1.405
@@ -140,7 +168,33 @@ This is our initial matrix.
 | windows-latest | ui        | 3.1.405 |
 | windows-latest | ui        | 5.0.102 |
 
-We start by doing a merge with the following matrix on the `component` column.
+We start by appending a matrix.
+| os             | component | dotnet  |
+| -------------- | --------- | ------- |
+| macos-latest   | backend   | 4.7.2   |
+| macos-latest   | backend   | 5.0.102 |
+| macos-latest   | ui        | 4.7.2   |
+| macos-latest   | ui        | 5.0.102 |
+
+This results in the following intermediate matrix.
+Notice that the new rows in bold appear at the top since the matrix is kept sorted.
+
+| os               | component   | dotnet      |
+| ---------------- | ----------- | ----------- |
+| **macos-latest** | **backend** | **4.7.2**   |
+| **macos-latest** | **backend** | **5.0.102** |
+| **macos-latest** | **ui**      | **4.7.2**   |
+| **macos-latest** | **ui**      | **5.0.102** |
+| ubuntu-latest    | backend     | 3.1.405     |
+| ubuntu-latest    | backend     | 5.0.102     |
+| ubuntu-latest    | ui          | 3.1.405     |
+| ubuntu-latest    | ui          | 5.0.102     |
+| windows-latest   | backend     | 3.1.405     |
+| windows-latest   | backend     | 5.0.102     |
+| windows-latest   | ui          | 3.1.405     |
+| windows-latest   | ui          | 5.0.102     |
+
+We then perform a merge with the following matrix on the `component` column.
 
 | component | node    |
 | --------- | ------- |
@@ -152,6 +206,12 @@ Notice the new merged rows in bold that are replacing the previous `ui` rows.
 
 | os                 | component | dotnet      | node        |
 | ------------------ | --------- | ----------- | ----------- |
+| macos-latest       | backend   | 4.7.2       |             |
+| macos-latest       | backend   | 5.0.102     |             |
+| **macos-latest**   | **ui**    | **4.7.2**   | **14.15.4** |
+| **macos-latest**   | **ui**    | **4.7.2**   | **15.6.0**  |
+| **macos-latest**   | **ui**    | **5.0.102** | **14.15.4** |
+| **macos-latest**   | **ui**    | **5.0.102** | **15.6.0**  |
 | ubuntu-latest      | backend   | 3.1.405     |             |
 | ubuntu-latest      | backend   | 5.0.102     |             |
 | **ubuntu-latest**  | **ui**    | **3.1.405** | **14.15.4** |
@@ -176,6 +236,12 @@ Notice the 2 new added rows in bold.
 
 | os                 | component | dotnet    | node        |
 | ------------------ | --------- | --------- | ----------- |
+| macos-latest       | backend   | 4.7.2     |             |
+| macos-latest       | backend   | 5.0.102   |             |
+| macos-latest       | ui        | 4.7.2     | 14.15.4     |
+| macos-latest       | ui        | 4.7.2     | 15.6.0      |
+| macos-latest       | ui        | 5.0.102   | 14.15.4     |
+| macos-latest       | ui        | 5.0.102   | 15.6.0      |
 | ubuntu-latest      | backend   | 3.1.405   |             |
 | ubuntu-latest      | backend   | 5.0.102   |             |
 | ubuntu-latest      | ui        | 3.1.405   | 14.15.4     |
