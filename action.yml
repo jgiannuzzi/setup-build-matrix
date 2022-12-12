@@ -15,5 +15,5 @@ outputs:
     description: A build matrix to use in your jobs
 
 runs:
-  using: node12
+  using: node16
   main: dist/index.js
