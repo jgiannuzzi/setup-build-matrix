@@ -29,7 +29,7 @@
     "@actions/core": "^1.2.6",
     "babel-runtime": "^6.26.0",
     "fast-cartesian": "^5.1.0",
-    "js-yaml": "^4.0.0",
+    "js-yaml": "^4.1.1",
     "pandas-js": "^0.2.4"
   },
   "devDependencies": {
